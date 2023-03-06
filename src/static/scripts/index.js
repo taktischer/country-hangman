@@ -20,16 +20,19 @@ let settings = {
     show_capital: false,
     show_population: false,
     show_languages: false,
-    reversed: false
+    reversed: false,
+    helps_first: false
 }
 let new_country = false;
 let changed_settings = false;
 
 let settings_button = document.getElementById('open_settings');
-
+let reveal = 0;
+let help_level = 0;
 
 answer_field.addEventListener('keydown', (e) => {
     if (e.keyCode === 13){
+        console.log("revealed:", reveal);
         guesses++;
         if (answer_field.value.toLowerCase().trim() === country_name.toLowerCase()){
             score += 15;
@@ -48,6 +51,9 @@ answer_field.addEventListener('keydown', (e) => {
             if (settings['show_languages']){
                 score-=1;
             }
+            if (settings['helps_first']){
+                score-=guesses;
+            }
             score-=(guesses-1)*2;
             if (score > 0){
                 score_info.textContent = `Score: ${score}`;
@@ -59,7 +65,7 @@ answer_field.addEventListener('keydown', (e) => {
         }
         answer_field.value = "";
         if (guesses%reveal_rate === 0){
-            if (guesses/reveal_rate === country_name.length-1) {
+            if (reveal/reveal_rate === country_name.length-2) {
                 guesses = 0;
                 score -= 15;
                 console.log(score);
@@ -72,17 +78,38 @@ answer_field.addEventListener('keydown', (e) => {
                 guessedCountry();
                 return;
             }
-            let text_content;
-            if (settings['reversed']){
-                text_content = country_text.textContent.substring(0, guesses/reveal_rate) +
-                    country_name[country_name.length-1-guesses/reveal_rate] +
-                    country_text.textContent.substring(guesses/reveal_rate+2, country_text.length);
+            if (settings["helps_first"] && help_level !== 4){
+                switch (help_level){
+                    case 0:
+                        languages_info.textContent = `Spoken languages: ${country_data['languages']}`;
+                        break;
+                    case 1:
+                        population_info.textContent = `Population: ${country_data['population']}`;
+                        break;
+                    case 2:
+                        capital_info.textContent = `Capital: ${country_data['capital']}`;
+                        break;
+                    case 3:
+                        flag_img.src = `${country_data['flag']}`;
+                        flag_img.alt = `${country_name}`;
+                        break;
+                }
+
+                help_level+=1;
             } else {
-                text_content = country_text.textContent.substring(0, guesses/reveal_rate) +
-                    country_name[guesses/reveal_rate] +
-                    country_text.textContent.substring(guesses/reveal_rate+2, country_text.length);
+                reveal+=1
+                let text_content;
+                if (settings['reversed']){
+                    text_content = country_text.textContent.substring(0, reveal/reveal_rate) +
+                        country_name[country_name.length-1-reveal/reveal_rate] +
+                        country_text.textContent.substring(reveal/reveal_rate+2, country_text.length);
+                } else {
+                    text_content = country_text.textContent.substring(0, reveal/reveal_rate) +
+                        country_name[reveal/reveal_rate] +
+                        country_text.textContent.substring(reveal/reveal_rate+2, country_text.length);
+                }
+                country_text.textContent = text_content;
             }
-            country_text.textContent = text_content;
         }
     }
 })
@@ -158,6 +185,9 @@ function getRandomCountry(){
         })
     guesses = 0;
     required_guesses.hidden = true;
+    reveal = 0;
+    help_level = 0;
+    console.log(reveal);
     return country_name;
 }
 
@@ -199,7 +229,11 @@ document.querySelector('#settings_checkboxes').onclick = function(element) {
     } else if(element.target.value === "reversed") {
         settings["reversed"] = element.target.checked;
         changed_settings = true;
-    } else {
+    } else if (element.target.value === "helps_first"){
+        settings["helps_first"] = element.target.checked;
+        changed_settings = true;
+    }
+    else {
         if (element.target.checked === false) {
             if (regions.length === 1){
                 element.target.checked = true;
@@ -236,9 +270,9 @@ function loadBody(){
         settings[`show_${show_settings[i]}`] = document.getElementById(`show_${show_settings[i]}`).checked;
     }
     settings['reversed'] = document.getElementById("reversed").checked;
+    settings['helps_first'] = document.getElementById('helps_first').checked;
     getRandomCountry();
 }
-
 
 function resetGame(){
     answer_field.disabled = false;
