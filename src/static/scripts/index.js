@@ -10,10 +10,8 @@ let next_country_bar = document.getElementById("next_country_bar");
 let flag_img = document.getElementById("flag_img");
 let capital_info = document.getElementById("capital_information");
 let population_info = document.getElementById("population_information");
-//let areaCode_info = document.getElementById("areaCode_information");
 let languages_info = document.getElementById("languages_information");
 let score_info = document.getElementById('score');
-
 let regions = ['Africa', 'Americas', 'Asia', 'Europe', 'Oceania'];
 let settings = {
     show_flag: false,
@@ -32,7 +30,6 @@ let help_level = 0;
 
 answer_field.addEventListener('keydown', (e) => {
     if (e.keyCode === 13){
-        console.log("revealed:", reveal);
         guesses++;
         if (answer_field.value.toLowerCase().trim() === country_name.toLowerCase()){
             score += 15;
@@ -52,7 +49,7 @@ answer_field.addEventListener('keydown', (e) => {
                 score-=1;
             }
             if (settings['helps_first']){
-                score-=guesses;
+                score-=guesses-1;
             }
             score-=(guesses-1)*2;
             if (score > 0){
@@ -68,7 +65,6 @@ answer_field.addEventListener('keydown', (e) => {
             if (reveal/reveal_rate === country_name.length-2) {
                 guesses = 0;
                 score -= 15;
-                console.log(score);
                 if (score > 0){
                     score_info.textContent = `Score: ${score}`;
                 } else {
@@ -114,12 +110,20 @@ answer_field.addEventListener('keydown', (e) => {
     }
 })
 
-
 function getRandomCountry(){
     if (new_country){
         return;
     }
-    resetGame();
+
+    answer_field.disabled = false;
+    answer_field.value = "";
+    capital_info.textContent = "";
+    population_info.textContent = "";
+    languages_info.textContent = "";
+    flag_img.src = "";
+    flag_img.alt = "";
+    next_country_bar.hidden = true;
+
     fetch(`https://restcountries.com/v3.1/region/${regions[Math.floor(regions.length * Math.random())]}`)
         .then((response) => response.json())
         .then((data) => {
@@ -187,7 +191,6 @@ function getRandomCountry(){
     required_guesses.hidden = true;
     reveal = 0;
     help_level = 0;
-    console.log(reveal);
     return country_name;
 }
 
@@ -274,20 +277,8 @@ function loadBody(){
     getRandomCountry();
 }
 
-function resetGame(){
-    answer_field.disabled = false;
-    answer_field.value = "";
-    capital_info.textContent = "";
-    population_info.textContent = "";
-    languages_info.textContent = "";
-    flag_img.src = "";
-    flag_img.alt = "";
-    next_country_bar.hidden = true;
-}
-
 let settings_modal = document.getElementById('settings_modal');
 settings_button.onclick = function (){
-    console.log("display: block");
     settings_modal.style.display = 'block';
 }
 
@@ -297,7 +288,6 @@ close_settings.onclick = function (){
         getRandomCountry();
     }
     changed_settings = false;
-    console.log("display: none");
     settings_modal.style.display = 'none';
 }
 
