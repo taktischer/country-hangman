@@ -1,0 +1,190 @@
+body {
+    background-color: #2b2a33;
+    color: #e2e2e2;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+    Arial, sans-serif;
+    max-height: 100%;
+}
+
+#title_bar {
+    padding-top: 2%;
+    text-align: center;
+}
+
+.container {
+    background-color: #111111 !important;
+    max-width: 85%;
+    width: 60vw;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 45%;
+    left: 50%;
+    border-radius: 0.6em;
+    box-shadow: 0 1.25em 1.8em rgba(8, 21, 65, 0.25);
+    min-height: 45%;
+    vertical-align: center;
+}
+
+#footer {
+    background-color: #111111 !important;
+    max-width: 95%;
+    width: 100vw;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    bottom: -1.5%;
+    left: 50%;
+    max-height: 5%;
+    height: 5%;
+    border-radius: 0.6em;
+    padding: 0;
+    box-shadow: 0 1.25em 1.8em rgba(8, 21, 65, 0.25);
+    text-align: center;
+}
+
+#made-by {
+    display: flex;
+    padding-top: 0.5%;
+    margin: auto;
+    align-items:center;
+    justify-content:center;
+}
+
+#country_text {
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    color: #e2e2e2;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    display: block;
+}
+
+.input_field {
+    padding-top: 1%;
+    text-align: center;
+}
+
+*:focus {
+    outline: none;
+    border-color: #e2e2e2;
+}
+
+#answer_field {
+    background-color: #2b2a33;
+    color: #e2e2e2;
+    width: 25%;
+    max-width: 50%;
+    font-size: large;
+    text-align: center;
+    padding: 0.8em 0.2em;
+    border-radius: 0.3em;
+}
+
+#flag_img {
+    border-radius: 0.6em;
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#flag {
+    padding-top: 1%;
+    text-align: center;
+}
+
+
+.country_information {
+    padding-left: 2%;
+    text-align: left;
+    float: left;
+}
+
+#region_selection {
+    padding-top: 2%;
+    position: absolute;
+    float: right;
+    text-align: right;
+    right: 2%;
+}
+
+#next_country_bar {
+    position: absolute;
+    float: right;
+    text-align: right;
+    width: 15%;
+    border-radius: 0.6em;
+    background-color: #2b2a33;
+}
+
+#country_bar {
+    width: 10%;
+    height: 20px;
+    background-color: #e2e2e2;
+}
+
+#score {
+    position: absolute;
+    float: left;
+    text-align: left;
+    left: 2%;
+}
+
+
+#open_settings {
+    background-color: #2b2a33;
+    color: #e2e2e2;
+    height: 32px;
+    width: 32px;
+    border-radius: 0.6em;
+}
+
+.modal {
+    display: none;
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.settings_content {
+    color: #e2e2e2;
+    background-color: #2b2a33;
+    margin: 6% auto; /* 15% from the top and centered */
+    padding: 10px;
+    border: 1px solid #888;
+    width: 75%; /* Could be more or less, depending on screen size */
+    border-radius: 0.6em;
+}
+
+tr {
+    text-align: left;
+}
+
+
+td {
+    min-width: 27.5%;
+}
+
+input[type=checkbox] {
+    float: right;
+    vertical-align: center;
+    margin-right: 35%;
+}
+
+.close_settings {
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close_settings:hover,
+.close_settings:focus {
+    text-decoration: none;
+    cursor: pointer;
+}

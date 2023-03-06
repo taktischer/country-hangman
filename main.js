@@ -6,7 +6,7 @@ const app = express();
 
 
 app.set('views', path.join(__dirname, 'src/views'));
-app.use(express.static(path.join(__dirname, 'src/style')));
+app.use(express.static(path.join(__dirname, 'src/static')));
 app.engine('.html', require('ejs').__express);
 app.set('view engine', 'html');
 http.createServer(app);
