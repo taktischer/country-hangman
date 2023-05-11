@@ -1,1 +1,1 @@
-# quiz-collection
+# country-hangman
